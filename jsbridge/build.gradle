@@ -1,0 +1,34 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion mCompileSdkVersion
+
+    defaultConfig {
+        minSdkVersion mMinSdkVersion
+        targetSdkVersion mTargetSdkVersion
+        versionCode 2
+        versionName '1.1.0'
+    }
+}
+
+dependencies {
+    //Fastjson
+    implementation 'com.alibaba:fastjson:1.2.56'
+}
+
+apply plugin: 'maven'
+
+uploadArchives {
+    repositories.mavenDeployer {
+        if ("true".equals(isLocalMaven)) {
+            repository(url: localRepository)
+        } else {
+            repository(url: remoteReposistory) {
+                authentication(userName: remoteUser, password: remotePassword)
+            }
+        }
+        pom.artifactId = 'jsbridge'
+        pom.groupId = 'com.kborid.android'
+        pom.version = '1.1.0'
+    }
+}

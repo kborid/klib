@@ -1,0 +1,66 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion mCompileSdkVersion
+
+    defaultConfig {
+        minSdkVersion mMinSdkVersion
+        targetSdkVersion mTargetSdkVersion
+        versionCode 1
+        versionName '1.0.0'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    // logger
+    api 'com.orhanobut:logger:2.2.0'
+
+    // logback
+    api 'org.slf4j:slf4j-api:1.7.25'
+    api 'com.github.tony19:logback-android:2.0.0'
+}
+
+apply plugin: 'maven'
+
+uploadArchives {
+    repositories.mavenDeployer {
+        if ("true".equals(isLocalMaven)) {
+            repository(url: localRepository)
+        } else {
+            repository(url: remoteReposistory) {
+                authentication(userName: remoteUser, password: remotePassword)
+            }
+        }
+        pom.groupId = 'com.kborid.android'
+        pom.artifactId = 'logger'
+        pom.version = '1.0.0'
+    }
+}
+
+//apply plugin: 'com.novoda.bintray-release'
+//
+//publish {
+//    userOrg = 'duanwei' //bintray账户下某个组织id
+//    groupId = 'com.thunisoft.android' //maven仓库下库的包名，一般为模块包名
+//    artifactId = 'logger' //项目名称
+//    publishVersion = '2.0.1' //版本号
+//    desc = 'logger for android' //项目介绍，可以不写
+//    website = 'https://github.com/kborid/smart' //项目主页，可以不写
+//}

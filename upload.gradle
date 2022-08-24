@@ -1,0 +1,41 @@
+apply plugin: 'maven'
+
+task androidJavadocs(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+
+task androidJavadocsJar(type: Jar, dependsOn: androidJavadocs) {
+    classifier = 'javadoc'
+    from androidJavadocs.destinationDir
+}
+
+task androidSourcesJar(type: Jar) {
+    classifier = 'sources'
+    from android.sourceSets.main.java.srcDirs
+}
+
+artifacts {
+    //aar包增加源码
+    archives androidSourcesJar
+    //aar包增加注释
+//    archives androidJavadocsJar
+}
+
+//指定编译的编码
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
+
+tasks.withType(GroovyCompile) {
+    groovyOptions.encoding = "MacRoman"
+}
+
+uploadArchives {
+    repositories.mavenDeployer {
+        repository(url: "file:///D:/Maven/")
+        pom.artifactId = 'bt'
+        pom.groupId = 'com.kborid.library'
+        pom.version = '1.0.0'
+    }
+}

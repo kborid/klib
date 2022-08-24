@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Test Demo</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <style type='text/css'>
+    html { font-family:Helvetica; color:#222; }
+    button { margin:0 3px 10px; font-size:30px; }
+
+    </style>
+</head>
+
+<body>
+<h1>Test Demo</h1>
+
+<form id="form1">
+    <input type="text" name="url">
+    <button type="button" onclick="submit()">GO</button>
+</form>
+
+<h2>下面的按钮可以测试接口功能，在上面输入框输入目标页面地址，也可以将目标页面地址复制到剪贴板自动识别</h2>
+<div id='buttons'></div>
+</body>
+</html>
+
+<script>
+    function submit() {
+        var form1 = document.getElementById('form1');
+        window.location.href=form1.url.value;
+    }
+
+    function connectWebViewJavascriptBridge(callback) {
+        if (window.WebViewJavascriptBridge) {
+            callback(WebViewJavascriptBridge)
+        } else {
+            document.addEventListener('WebViewJavascriptBridgeReady',
+                function() {
+                    callback(WebViewJavascriptBridge)
+                },
+                false)
+        }
+    }
+
+    function defaultHandler(message, responseCallback) {
+        var data = {'Javascript Responds':'Wee!'}
+        responseCallback(data)
+    }
+
+    connectWebViewJavascriptBridge(function(bridge) {
+                                       bridge.init(defaultHandler)
+
+                                       //注册方法列表 ，注入到native分享列表
+                                       bridge.registerHandler('addActionToNative', function(data, responseCallback) {
+                                                              var responseData = [{'title':'action1',
+                                                                                  'imgURL':'icon1',
+                                                                                  'action':'actionHandler1'
+                                                                                  },
+                                                                                  {'title':'action2',
+                                                                                  'imgURL':'icon2',
+                                                                                  'action':'actionHandler2'
+                                                                                  }];
+                                                              responseCallback(JSON.stringify(responseData))
+                                                              })
+                                       //上一步注册方法的回调事件
+                                       bridge.registerHandler('actionHandler1', function() {
+                                                              alert('actionHandler1');
+                                                              })
+
+                                       bridge.registerHandler('actionHandler2', function() {
+                                                              alert('actionHandler2');
+                                                              })
+
+
+
+                                       var getUserIDButton = document.getElementById('buttons').appendChild(document.createElement('button'))
+                                       getUserIDButton.innerHTML = 'TestWithCallback'
+                                       getUserIDButton.onclick = function(e) {
+                                           bridge.callHandler('TestWithCallback', null, function(response) {
+                                                                alert(response);
+                                                              })
+                                       }
+
+                                       var getUserIDButton = document.getElementById('buttons').appendChild(document.createElement('button'))
+                                       getUserIDButton.innerHTML = 'TestWithoutCallback'
+                                       getUserIDButton.onclick = function(e) {
+                                           bridge.callHandler('TestWithoutCallback', null, null)
+                                       }
+                                   })
+
+
+
+</script>

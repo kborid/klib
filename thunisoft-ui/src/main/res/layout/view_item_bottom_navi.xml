@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerInParent="true">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingTop="8dp">
+
+        <ImageView
+            android:id="@+id/iv_nav_icon"
+            android:layout_width="20dp"
+            android:layout_height="20dp" />
+
+        <TextView
+            android:id="@+id/tv_nav_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:minWidth="55dp"
+            android:textColor="@color/color_nav_text"
+            android:textSize="10sp" />
+    </LinearLayout>
+
+    <!--msg count-->
+    <TextView
+        android:id="@+id/tv_msg_count"
+        style="@style/msgCountIndicator"
+        android:layout_marginLeft="32dp"
+        android:visibility="gone" />
+</FrameLayout>

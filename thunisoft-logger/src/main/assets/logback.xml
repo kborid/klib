@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false">
+    <!-- define动态获取LOG_HOME, 如需其他路径可自行配置property-->
+    <define name="LOG_HOME" class="com.kborid.logback.LogbackHomeProperty" />
+    <statusListener class="ch.qos.logback.core.status.NopStatusListener" />
+    <property name="LOG_NAME" value="logcat"/>
+
+    <!-- 普通日志控制台输出 -->
+    <appender class="ch.qos.logback.classic.android.LogcatAppender" name="stdout">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss:SSS , GMT+8} %m [%c:%L]-[%p] %n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 普通日志输出文件 -->
+    <appender class="ch.qos.logback.core.rolling.RollingFileAppender" name="FILE">
+        <File>${LOG_HOME}/${LOG_NAME}_stdout.log</File>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%-5level] [%-5thread] %logger{20} - %msg%n</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${LOG_HOME}/${LOG_NAME}_stdout.%d{yyyy-MM-dd}.log</FileNamePattern>
+            <maxHistory>7</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <!-- 错误日志输出文件 -->
+    <appender class="ch.qos.logback.core.rolling.RollingFileAppender"
+        name="FILE-ERROR">
+        <File>${LOG_HOME}/${LOG_NAME}_stderr.log</File>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%-5level] [%-5thread] %logger{20} - %msg%n</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>error</level>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${LOG_HOME}/${LOG_NAME}_stderr.%d{yyyy-MM-dd}.log</FileNamePattern>
+            <maxHistory>7</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <logger additivity="false" name="com.kborid">
+        <appender-ref ref="stdout"/>
+        <appender-ref ref="FILE"/>
+        <appender-ref ref="FILE-ERROR"/>
+        <level value="info"/>
+    </logger>
+    <root>
+        <appender-ref ref="stdout"/>
+        <appender-ref ref="FILE"/>
+        <appender-ref ref="FILE-ERROR"/>
+        <level value="warn"/>
+    </root>
+</configuration>

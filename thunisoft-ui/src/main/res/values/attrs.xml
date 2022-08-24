@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ProgressWheel">
+        <attr name="matProg_progressIndeterminate" format="boolean" />
+        <attr name="matProg_barColor" format="color" />
+        <attr name="matProg_rimColor" format="color" />
+        <attr name="matProg_rimWidth" format="dimension" />
+        <attr name="matProg_spinSpeed" format="float" />
+        <attr name="matProg_barSpinCycleTime" format="integer" />
+        <attr name="matProg_circleRadius" format="dimension" />
+        <attr name="matProg_fillRadius" format="boolean" />
+        <attr name="matProg_barWidth" format="dimension" />
+        <attr name="matProg_linearProgress" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="CircleImageView">
+        <attr name="border_width" format="dimension" />
+        <attr name="border_color" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="SearchEditText">
+        <attr name="isCenter" format="boolean" />
+        <attr name="isOpen" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="NavigationBottomItem">
+        <attr name="drawableTop" format="reference" />
+        <attr name="bottomItemTitle" format="string" />
+        <attr name="iconSize" format="dimension" />
+        <attr name="drawablePadding" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="MainTitleLayout">
+        <attr name="mainTitleSize" format="dimension" />
+        <attr name="mainTitleColor" format="color" />
+        <attr name="rightLayoutId" format="reference" />
+        <attr name="ellipsize" />
+    </declare-styleable>
+
+    <attr name="ellipsize">
+        <enum name="end" value="0" />
+        <enum name="marquee" value="1" />
+    </attr>
+
+    <declare-styleable name="CornerLabelView">
+        <attr name="side_length" format="dimension" />
+        <attr name="margin_lean_side" format="dimension" />
+        <attr name="bg_color" format="color" />
+        <attr name="text_color" format="color" />
+        <attr name="text_size" format="dimension" />
+        <attr name="text" format="string" />
+        <attr name="position">
+            <enum name="right_top" value="0" />
+            <enum name="right_bottom" value="1" />
+            <enum name="left_bottom" value="2" />
+            <enum name="left_top" value="3" />
+        </attr>
+    </declare-styleable>
+</resources>
